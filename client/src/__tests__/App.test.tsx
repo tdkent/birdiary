@@ -1,5 +1,6 @@
 // Imports
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 // To Test
 import App from "../App";
@@ -10,13 +11,13 @@ test("Renders main page correctly", async () => {
   render(<App />);
   const button = await screen.findByRole("button");
 
-  // Pre Expecations
+  // Initial State
   expect(button.innerHTML).toBe("count is 0");
 
-  // Init
-  // user actions go here
+  // User Actions
+  await userEvent.click(button);
+  await userEvent.click(button);
 
-  // Post Expectations
-  // result of user actions go here
-  expect(true).toBeTruthy();
+  // Result of User Actions
+  expect(button.innerHTML).toBe("count is 2");
 });
