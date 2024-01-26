@@ -1,13 +1,12 @@
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 
 import { appRouter } from './routers/index.js';
 
 export const app = express();
 
-app.use('/', (req: Request, res: Response) => {
-	res.json({ message: 'Hello world!!!' });
-});
+app.use(cors({ origin: 'http://localhost:5173' }));
 
 app.use(
 	'/trpc',
@@ -15,3 +14,7 @@ app.use(
 		router: appRouter,
 	})
 );
+
+app.use('/', (req: Request, res: Response) => {
+	res.json({ message: 'Hello world!!!' });
+});
