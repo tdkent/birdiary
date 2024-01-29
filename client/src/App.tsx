@@ -2,18 +2,18 @@ import { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { client } from './main';
+import Main from './layouts/Main';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>Hello world!</div>
+    element: <Main />
   }
 ]);
 
 function App() {
   // trpc test
   useEffect(() => {
-    console.log('Attempting to fetch data');
     const greeting = async () => {
       const result = await client.get.query();
       console.log('trpc test: ', result);
