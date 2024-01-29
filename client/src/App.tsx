@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import { client } from "./main";
 
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import "./App.css";
 
 function App() {
@@ -30,6 +32,7 @@ function App() {
 
   return (
     <main>
+      <Header />
       <form onSubmit={handleSubmit}>
         <label htmlFor="">New Todo:</label>
         <input value={text} type="text" onChange={handleChange} />
@@ -44,6 +47,7 @@ function App() {
           );
         })}
       </div>
+      <Footer />
     </main>
   );
 }
