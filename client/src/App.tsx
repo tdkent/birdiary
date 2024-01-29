@@ -1,15 +1,7 @@
 import { useEffect } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { client } from './main';
 import Main from '@layouts/Main/Main';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Main />
-  }
-]);
 
 function App() {
   // trpc test
@@ -23,7 +15,7 @@ function App() {
 
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      <Main />
     </div>
   );
 }

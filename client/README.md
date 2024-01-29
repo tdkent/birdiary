@@ -1,5 +1,5 @@
 # Birdiary
 
-## Server
+## Client
 
 ### tRPC, TypeScript, React
