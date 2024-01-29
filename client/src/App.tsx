@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { client } from './main';
-import Main from './layouts/Main';
+import Main from './layouts/Main/Main';
 
 const router = createBrowserRouter([
   {
