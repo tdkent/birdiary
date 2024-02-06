@@ -1,10 +1,12 @@
 // Imports
+import { useState } from 'react';
 import {
   Box,
   Stack,
   VStack,
   Heading,
   FormControl,
+  FormLabel,
   Input,
   Button,
   Card,
@@ -34,6 +36,12 @@ const dummydata = [
 ];
 
 export default function Home() {
+  const [userInput, setUserInput] = useState('');
+
+  const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setUserInput(e.currentTarget.value);
+  };
+
   return (
     <Box>
       <Heading as="h2" size="3xl" variant="splash">
@@ -41,8 +49,8 @@ export default function Home() {
       </Heading>
       <VStack as="form" mt="3rem" spacing="1rem">
         <FormControl>
-          {/* <FormLabel>Add a bird</FormLabel> */}
-          <Input size="lg" />
+          <FormLabel>Add a bird</FormLabel>
+          <Input size="lg" value={userInput} onChange={handleInputChange} />
         </FormControl>
         <Button size="lg" w="full">
           Add bird
@@ -66,7 +74,7 @@ export default function Home() {
                     {bird.date}
                     {bird.isNew ? (
                       <Badge ml={4} colorScheme="green">
-                        New!
+                        New
                       </Badge>
                     ) : null}
                   </Text>
