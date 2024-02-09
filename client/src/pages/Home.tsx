@@ -17,6 +17,8 @@ import {
   Flex,
   Badge
 } from '@chakra-ui/react';
+// Internal Imports
+import { trpc } from '@utils/trpc';
 
 const dummydata = [
   {
@@ -36,6 +38,10 @@ const dummydata = [
 ];
 
 export default function Home() {
+  // tRPC React Query test
+  const query = trpc.get.useQuery();
+  console.log('trpc query: ', query.data);
+  // State
   const [userInput, setUserInput] = useState('');
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
