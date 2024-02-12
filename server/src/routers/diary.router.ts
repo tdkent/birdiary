@@ -38,19 +38,15 @@ const diaryRouter = router({
 		.input(z.object({ name: z.string() }))
 		.mutation((req) => {
 			const { input } = req;
+			const newBird: Bird = {
+				id: `${Math.random()}`,
+				name: input.name,
+				date: '2/10/24',
+				isNewBird: true
+			};
+			recentBirds.push(newBird);
 
-			console.log(input);
-
-			// const bird: Bird = {
-			//   id: `${Math.random()}`,
-			//   name: input.name,
-			//   date: '2/10/24',
-			//   isNew: true
-			// };
-
-			// birds.push(bird);
-
-			return true;
+			return newBird;
 		})
 });
 

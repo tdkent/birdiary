@@ -12,45 +12,37 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Divider
-  // Text,
-  // Flex,
-  // Badge
+  Divider,
+  Text,
+  Flex,
+  Badge
 } from '@chakra-ui/react';
 // Internal Imports
 import { trpc } from '../trpc';
 
+// function wait(duration: number) {
+//   return new Promise((resolve) => setTimeout(resolve, duration));
+// }
+
 export default function Home() {
-  const { data, isLoading, refetch } = trpc.diary.getRecentBirds.useQuery();
-  console.log('🚀 ~ Home ~ data:', data);
   // State
   const [userInput, setUserInput] = useState('');
-  // const [name, setName] = useState('');
-
-  // const mutation = trpc.user.createUser.useMutation({
-  //   onSuccess: () => refetch()
-  // });
-
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setName(event.target.value);
-  // };
-
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   setName('');
-  //   mutation.mutate({ name });
-  //   event.preventDefault();
-  // };
-
+  // React Query
+  const { data, isLoading, refetch } = trpc.diary.getRecentBirds.useQuery();
+  const mutation = trpc.diary.addBird.useMutation({
+    onSuccess: () => refetch()
+  });
+  // Form Functions
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     setUserInput(e.currentTarget.value);
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(userInput);
+    setUserInput('');
+    mutation.mutate({ name: userInput });
   };
 
-  // if (isLoading) return <span>Loading ...</span>;
+  if (isLoading) return <span>Loading ...</span>;
 
   return (
     <Box>
@@ -66,12 +58,6 @@ export default function Home() {
           Add bird
         </Button>
       </VStack>
-      {/* <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input id="name" type="text" value={name} onChange={handleChange} />
-
-        <button type="submit">Create</button>
-      </form> */}
       <Card variant="unstyled" mt="3rem">
         <CardHeader>
           <Heading as="h3" size="md">
@@ -80,7 +66,7 @@ export default function Home() {
         </CardHeader>
         <CardBody mt="2rem">
           <Stack divider={<Divider />} spacing={4}>
-            {/* {dummydata.map((bird) => {
+            {(data?.recentBirds ?? []).map((bird) => {
               return (
                 <Flex key={bird.id} flexDirection="column" gap={2}>
                   <Heading as="h6" size="sm">
@@ -88,7 +74,7 @@ export default function Home() {
                   </Heading>
                   <Text fontSize="sm">
                     {bird.date}
-                    {bird.isNew ? (
+                    {bird.isNewBird ? (
                       <Badge ml={4} colorScheme="green">
                         New
                       </Badge>
@@ -96,12 +82,7 @@ export default function Home() {
                   </Text>
                 </Flex>
               );
-            })} */}
-            <ul>
-              {/* {(data ?? []).map((user) => (
-                <li key={user.id}>{user.name}</li>
-              ))} */}
-            </ul>
+            })}
           </Stack>
         </CardBody>
       </Card>
