@@ -12,56 +12,66 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Divider,
-  Text,
-  Flex,
-  Badge
+  Divider
+  // Text,
+  // Flex,
+  // Badge
 } from '@chakra-ui/react';
 // Internal Imports
-import { trpc } from '@utils/trpc';
-
-const dummydata = [
-  {
-    id: 1,
-    name: "Steller's sea eagle",
-    date: '12/04/24',
-    isNew: true
-  },
-  {
-    id: 2,
-    name: 'Blue jay',
-    date: '12/04/24',
-    isNew: false
-  },
-  { id: 3, name: 'American coot', date: '12/02/24', isNew: false },
-  { id: 4, name: 'Brown pelican', date: '12/01/24', isNew: true }
-];
+import { trpc } from '../trpc';
 
 export default function Home() {
-  // tRPC React Query test
-  const query = trpc.get.useQuery();
-  console.log('trpc query: ', query.data);
+  const { data, isLoading, refetch } = trpc.diary.getRecentBirds.useQuery();
+  console.log('🚀 ~ Home ~ data:', data);
   // State
   const [userInput, setUserInput] = useState('');
+  // const [name, setName] = useState('');
+
+  // const mutation = trpc.user.createUser.useMutation({
+  //   onSuccess: () => refetch()
+  // });
+
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setName(event.target.value);
+  // };
+
+  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //   setName('');
+  //   mutation.mutate({ name });
+  //   event.preventDefault();
+  // };
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     setUserInput(e.currentTarget.value);
   };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(userInput);
+  };
+
+  // if (isLoading) return <span>Loading ...</span>;
 
   return (
     <Box>
       <Heading as="h2" size="3xl" variant="splash">
         Welcome to your daily bird diary!
       </Heading>
-      <VStack as="form" mt="3rem" spacing="1rem">
+      <VStack as="form" mt="3rem" spacing="1rem" onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel>Add a bird</FormLabel>
           <Input size="lg" value={userInput} onChange={handleInputChange} />
         </FormControl>
-        <Button size="lg" w="full">
+        <Button size="lg" w="full" type="submit">
           Add bird
         </Button>
       </VStack>
+      {/* <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Name:</label>
+        <input id="name" type="text" value={name} onChange={handleChange} />
+
+        <button type="submit">Create</button>
+      </form> */}
       <Card variant="unstyled" mt="3rem">
         <CardHeader>
           <Heading as="h3" size="md">
@@ -70,7 +80,7 @@ export default function Home() {
         </CardHeader>
         <CardBody mt="2rem">
           <Stack divider={<Divider />} spacing={4}>
-            {dummydata.map((bird) => {
+            {/* {dummydata.map((bird) => {
               return (
                 <Flex key={bird.id} flexDirection="column" gap={2}>
                   <Heading as="h6" size="sm">
@@ -86,7 +96,12 @@ export default function Home() {
                   </Text>
                 </Flex>
               );
-            })}
+            })} */}
+            <ul>
+              {/* {(data ?? []).map((user) => (
+                <li key={user.id}>{user.name}</li>
+              ))} */}
+            </ul>
           </Stack>
         </CardBody>
       </Card>
