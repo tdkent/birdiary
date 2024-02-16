@@ -35,6 +35,8 @@ export default function Home() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setUserInput('');
+    console.log(userInput);
+    // mutation.mutate({ name: userInput });
     mutation.mutate({ name: userInput });
   };
   //isLoading state

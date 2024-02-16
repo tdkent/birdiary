@@ -11,17 +11,25 @@ const diaryRouter = router({
 	}),
 	addBird: publicProcedure
 		.input(z.object({ name: z.string() }))
-		.mutation((req) => {
+		.mutation(async (req) => {
 			const { input } = req;
+			console.log('🚀 ~ .mutation ~ input:', input);
 			const newBird: Bird = {
-				id: `${Math.random()}`,
+				id: '10',
 				name: input.name,
 				date: '2/10/24',
 				isNewBird: true
 			};
-			// recentBirds.push(newBird);
-
-			return newBird;
+			const { rows } = await pool.query(
+				`
+			INSERT INTO diary_entry_temp (id, name, entry_date, isnewbird)
+			VALUES($1, $2, $3, $4)
+			RETURNING id;
+			`,
+				[newBird.id, newBird.name, newBird.date, newBird.isNewBird]
+			);
+			console.log('rows: ', rows);
+			return { rows };
 		})
 });
 
