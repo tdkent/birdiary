@@ -20,10 +20,6 @@ import {
 // Internal Imports
 import { trpc } from '../trpc';
 
-// function wait(duration: number) {
-//   return new Promise((resolve) => setTimeout(resolve, duration));
-// }
-
 export default function Home() {
   // State
   const [userInput, setUserInput] = useState('');
@@ -41,7 +37,7 @@ export default function Home() {
     setUserInput('');
     mutation.mutate({ name: userInput });
   };
-
+  //isLoading state
   if (isLoading) return <span>Loading ...</span>;
 
   return (
@@ -66,15 +62,15 @@ export default function Home() {
         </CardHeader>
         <CardBody mt="2rem">
           <Stack divider={<Divider />} spacing={4}>
-            {(data?.recentBirds ?? []).map((bird) => {
+            {(data?.rows ?? []).map((bird) => {
               return (
                 <Flex key={bird.id} flexDirection="column" gap={2}>
                   <Heading as="h6" size="sm">
                     {bird.name}
                   </Heading>
                   <Text fontSize="sm">
-                    {bird.date}
-                    {bird.isNewBird ? (
+                    {bird.entry_date}
+                    {bird.isnewbird ? (
                       <Badge ml={4} colorScheme="green">
                         New
                       </Badge>
