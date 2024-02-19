@@ -1,12 +1,13 @@
 import { z } from 'zod';
 
-import pool from '../utils/db.js';
+import pool from '../utils/connect.db.js';
 import { router, publicProcedure } from '../trpc.js';
 import { Bird } from '../models/bird.model.js';
 
 const diaryRouter = router({
 	getRecentBirds: publicProcedure.query(async () => {
-		const { rows } = await pool.query('SELECT * FROM diary_entry_temp');
+		const { rows } = await pool.query(`SELECT * FROM bird_sighting;`);
+		console.log(rows);
 		return { rows };
 	}),
 	addBird: publicProcedure

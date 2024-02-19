@@ -6,6 +6,7 @@
 	"scripts": {
 		"build": "tsc -p tsconfig.build.json",
 		"build:watch": "tsc -p tsconfig.build.json -w",
+		"db": "node dist/utils/build.db.js",
 		"dev": "nodemon dist/index.js",
 		"start": "node dist/index.js",
 		"format": "prettier --write --list-different .",

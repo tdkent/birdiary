@@ -66,13 +66,13 @@ export default function Home() {
           <Stack divider={<Divider />} spacing={4}>
             {(data?.rows ?? []).map((bird) => {
               return (
-                <Flex key={bird.id} flexDirection="column" gap={2}>
+                <Flex key={bird.sight_id} flexDirection="column" gap={2}>
                   <Heading as="h6" size="sm">
-                    {bird.name}
+                    {bird.bird_name}
                   </Heading>
                   <Text fontSize="sm">
-                    {bird.entry_date}
-                    {bird.isnewbird ? (
+                    {bird.sight_date}
+                    {bird.is_new ? (
                       <Badge ml={4} colorScheme="green">
                         New
                       </Badge>
