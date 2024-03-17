@@ -52,8 +52,11 @@ export default function Home() {
           <FormLabel>Add a bird</FormLabel>
           <Input size="lg" value={userInput} onChange={handleInputChange} />
         </FormControl>
-        <Button size="lg" w="full" type="submit">
-          Add bird
+        <Button size="lg" width="full" type="submit" colorScheme="blue">
+          Quick add
+        </Button>
+        <Button size="lg" width="full" colorScheme="gray">
+          Add details
         </Button>
       </VStack>
       <Card variant="unstyled" mt="3rem">
