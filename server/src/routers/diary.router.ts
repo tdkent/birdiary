@@ -2,34 +2,27 @@ import { z } from 'zod';
 
 import pool from '../utils/connect.db.js';
 import { router, publicProcedure } from '../trpc.js';
-import { Bird } from '../models/bird.model.js';
+import { Sighting } from '../models/sighting.model.js';
 
 const diaryRouter = router({
 	getRecentBirds: publicProcedure.query(async () => {
-		const { rows } = await pool.query(`SELECT * FROM bird_sighting;`);
-		console.log(rows);
+		const { rows }: { rows: Sighting[] } = await pool.query(
+			`SELECT * FROM sighting;`
+		);
 		return { rows };
 	}),
 	addBird: publicProcedure
 		.input(z.object({ name: z.string() }))
 		.mutation(async (req) => {
 			const { input } = req;
-			console.log('🚀 ~ .mutation ~ input:', input);
-			const newBird: Bird = {
-				id: '10',
-				name: input.name,
-				date: '2/10/24',
-				isNewBird: true
-			};
 			const { rows } = await pool.query(
 				`
-			INSERT INTO diary_entry_temp (id, name, entry_date, isnewbird)
-			VALUES($1, $2, $3, $4)
-			RETURNING id;
+			INSERT INTO sighting (diary_id, bird_name, is_new)
+			VALUES($1, $2, $3)
+			RETURNING sight_id;
 			`,
-				[newBird.id, newBird.name, newBird.date, newBird.isNewBird]
+				[1, input.name, false]
 			);
-			console.log('rows: ', rows);
 			return { rows };
 		})
 });

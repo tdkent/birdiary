@@ -4,7 +4,7 @@ async function createTables() {
 	try {
 		console.log('Dropping tables...');
 		await pool.query(`
-		DROP TABLE IF EXISTS bird_sighting;
+		DROP TABLE IF EXISTS sighting;
 		DROP TABLE IF EXISTS location;
 		DROP TABLE IF EXISTS diary;
 		DROP TABLE IF EXISTS users;
@@ -28,7 +28,7 @@ async function createTables() {
 			location_name VARCHAR(200),
 			PRIMARY KEY (location_name)
 		);
-		CREATE TABLE bird_sighting (
+		CREATE TABLE sighting (
 			sight_id SERIAL,
 			diary_id INT,
 			location_name VARCHAR(200),
@@ -61,7 +61,7 @@ async function createDummyData() {
 			('Ballena Bay, Alameda, CA'),
 			('Crab Cove, Alameda, CA')
 		;
-		INSERT INTO bird_sighting
+		INSERT INTO sighting
 			(diary_id, location_name, bird_name, is_new, description)
 		VALUES
 			(1, 'Ballena Bay, Alameda, CA', 'Steller''s sea eagle', true, 'Huge raptor was fishing along the shoreline!'),
