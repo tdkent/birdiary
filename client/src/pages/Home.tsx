@@ -15,7 +15,15 @@ import {
   Divider,
   Text,
   Flex,
-  Badge
+  Badge,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure
 } from '@chakra-ui/react';
 // Internal Imports
 import { trpc } from '../trpc';
@@ -39,54 +47,76 @@ export default function Home() {
     // mutation.mutate({ name: userInput });
     mutation.mutate({ name: userInput });
   };
+
+  // modal
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   //isLoading state
   if (isLoading) return <span>Loading ...</span>;
 
   return (
-    <Box>
-      <Heading as="h2" size="3xl" variant="splash">
-        Welcome to your daily bird diary!
-      </Heading>
-      <VStack as="form" mt="3rem" spacing="1rem" onSubmit={handleSubmit}>
-        <FormControl>
-          <FormLabel>Add a bird</FormLabel>
-          <Input size="lg" value={userInput} onChange={handleInputChange} />
-        </FormControl>
-        <Button size="lg" width="full" type="submit" colorScheme="blue">
-          Quick add
-        </Button>
-        <Button size="lg" width="full" colorScheme="gray">
-          Add details
-        </Button>
-      </VStack>
-      <Card variant="unstyled" mt="3rem">
-        <CardHeader>
-          <Heading as="h3" size="md">
-            Recent birds
-          </Heading>
-        </CardHeader>
-        <CardBody mt="2rem">
-          <Stack divider={<Divider />} spacing={4}>
-            {(data?.rows ?? []).map((bird) => {
-              return (
-                <Flex key={bird.sight_id} flexDirection="column" gap={2}>
-                  <Heading as="h6" size="sm">
-                    {bird.bird_name}
-                  </Heading>
-                  <Text fontSize="sm">
-                    {bird.sight_date}
-                    {bird.is_new ? (
-                      <Badge ml={4} colorScheme="green">
-                        New
-                      </Badge>
-                    ) : null}
-                  </Text>
-                </Flex>
-              );
-            })}
-          </Stack>
-        </CardBody>
-      </Card>
-    </Box>
+    <>
+      <Box>
+        <Heading as="h2" size="3xl" variant="splash">
+          Welcome to your daily bird diary!
+        </Heading>
+        <VStack as="form" mt="3rem" spacing="1rem" onSubmit={handleSubmit}>
+          <FormControl>
+            <FormLabel>Add a bird</FormLabel>
+            <Input size="lg" value={userInput} onChange={handleInputChange} />
+          </FormControl>
+          <Button size="lg" width="full" type="submit" colorScheme="blue">
+            Quick add
+          </Button>
+          <Button size="lg" width="full" colorScheme="gray" onClick={onOpen}>
+            Add details
+          </Button>
+        </VStack>
+        <Card variant="unstyled" mt="3rem">
+          <CardHeader>
+            <Heading as="h3" size="md">
+              Recent birds
+            </Heading>
+          </CardHeader>
+          <CardBody mt="2rem">
+            <Stack divider={<Divider />} spacing={4}>
+              {(data?.rows ?? []).map((bird) => {
+                return (
+                  <Flex key={bird.sight_id} flexDirection="column" gap={2}>
+                    <Heading as="h6" size="sm">
+                      {bird.bird_name}
+                    </Heading>
+                    <Text fontSize="sm">
+                      {bird.sight_date}
+                      {bird.is_new ? (
+                        <Badge ml={4} colorScheme="green">
+                          New
+                        </Badge>
+                      ) : null}
+                    </Text>
+                  </Flex>
+                );
+              })}
+            </Stack>
+          </CardBody>
+        </Card>
+      </Box>
+      {/* Details modal */}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add sighting details</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>Hello world</ModalBody>
+
+          <ModalFooter>
+            <Button mr={3} variant="ghost" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme="blue">Submit</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
