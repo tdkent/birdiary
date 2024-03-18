@@ -7,6 +7,7 @@ import {
   Heading,
   FormControl,
   FormLabel,
+  FormHelperText,
   Input,
   Button,
   Card,
@@ -14,6 +15,7 @@ import {
   CardBody,
   Divider,
   Text,
+  Textarea,
   Flex,
   Badge,
   Modal,
@@ -105,15 +107,49 @@ export default function Home() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add sighting details</ModalHeader>
+          <ModalHeader>
+            <Heading size="lg">Add sighting details</Heading>
+          </ModalHeader>
           <ModalCloseButton />
-          <ModalBody>Hello world</ModalBody>
-
+          <ModalBody>
+            <Box
+              bg="tomato"
+              w="100%"
+              h="180px"
+              position="relative"
+              overflow="hidden">
+              <Text color="white">Bird image</Text>
+            </Box>
+            <Heading size="sm">{userInput || 'Blue jay'}</Heading>
+            <Text>
+              <i>Cyanocitta cristata</i>
+            </Text>
+            <VStack as="form" mt="1rem" spacing="1rem">
+              <FormControl>
+                <FormLabel>Location</FormLabel>
+                <Input
+                  size="lg"
+                  value={userInput}
+                  onChange={handleInputChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Description</FormLabel>
+                <Textarea
+                  size="sm"
+                  placeholder="Add some notes about your sighting"
+                />
+                <FormHelperText>Characters remaining: 500</FormHelperText>
+              </FormControl>
+              <Button size="lg" width="full" type="submit" colorScheme="blue">
+                Add sighting
+              </Button>
+            </VStack>
+          </ModalBody>
           <ModalFooter>
             <Button mr={3} variant="ghost" onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue">Submit</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
