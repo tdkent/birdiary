@@ -34,7 +34,8 @@ export default function Home() {
   // State
   const [userInput, setUserInput] = useState('');
   // React Query
-  const { data, isLoading, refetch } = trpc.diary.getRecentBirds.useQuery();
+  const { data, isFetching, isLoading, refetch } =
+    trpc.diary.getRecentBirds.useQuery();
   const mutation = trpc.diary.addBird.useMutation({
     onSuccess: () => refetch()
   });
@@ -46,7 +47,6 @@ export default function Home() {
     e.preventDefault();
     setUserInput('');
     console.log(userInput);
-    // mutation.mutate({ name: userInput });
     mutation.mutate({ name: userInput });
   };
 
@@ -54,7 +54,7 @@ export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   //isLoading state
-  if (isLoading) return <span>Loading ...</span>;
+  if (isLoading && isFetching) return <span>Loading ...</span>;
 
   return (
     <>

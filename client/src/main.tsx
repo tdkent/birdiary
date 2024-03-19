@@ -7,7 +7,16 @@ import App from './App';
 import { trpc, trpcClient } from './trpc';
 import theme from './theme';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      networkMode: 'always'
+    },
+    mutations: {
+      networkMode: 'always'
+    }
+  }
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
